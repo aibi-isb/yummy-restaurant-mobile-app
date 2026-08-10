@@ -1,18 +1,26 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { useAuthStore } from "@/store/authStore";
+import { Stack } from "expo-router";
+import { useEffect } from "react";
+import { ThemeProvider } from "@/providers/theme-provider";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+export default function RootLayout() {
+  const { init } = useAuthStore();
 
-SplashScreen.preventAutoHideAsync();
+  // Bootstrap: load the persisted session and subscribe to auth state changes
+  useEffect(() => {
+    const unsubscribe = init();
+    return unsubscribe;
+  }, []);          // eslint-disable-line react-hooks/exhaustive-deps
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
+    <ThemeProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "#121214" },
+          animation: "slide_from_right",
+        }}
+      />
     </ThemeProvider>
   );
 }
