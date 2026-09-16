@@ -6,7 +6,7 @@ import { CUSTOMER_HOME_ROUTE, isAdminRole, LOGIN_ROUTE } from "@/lib/routes";
 import { useAuthStore } from "@/store/authStore";
 import { Redirect, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Appearance, StyleSheet, View } from "react-native";
+import { Appearance, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
 
@@ -15,7 +15,9 @@ export default function AdminLayout() {
   const { colors, mode } = useAdminTheme();
 
   useEffect(() => {
-    Appearance.setColorScheme(mode);
+    if (Platform.OS !== "web") {
+      Appearance.setColorScheme(mode);
+    }
   }, [mode]);
 
   if (loading) {

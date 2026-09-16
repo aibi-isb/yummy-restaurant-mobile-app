@@ -8,7 +8,7 @@ import { useAuthStore } from "@/store/authStore";
 import { Redirect, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { AppState, Appearance, View } from "react-native";
+import { AppState, Appearance, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CustomerLayout() {
@@ -16,7 +16,9 @@ export default function CustomerLayout() {
   const { colors, mode } = useTheme();
 
   useEffect(() => {
-    Appearance.setColorScheme(mode);
+    if (Platform.OS !== "web") {
+      Appearance.setColorScheme(mode);
+    }
   }, [mode]);
   const { refresh: refreshCart } = useCart();
   const { refresh: refreshNotifications } = useNotifications(user?.id);

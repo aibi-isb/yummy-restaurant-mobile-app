@@ -26,7 +26,8 @@
           "cameraPermission": false,
           "microphonePermission": false
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "main": "expo-router/entry",
     "ios": {

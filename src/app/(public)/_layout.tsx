@@ -2,7 +2,7 @@ import { GuardLoading } from "@/components/navigation/GuardLoading";
 import { ADMIN_HOME_ROUTE, CUSTOMER_HOME_ROUTE, isAdminRole } from "@/lib/routes";
 import { useAuthStore } from "@/store/authStore";
 import { Redirect, Stack, useSegments } from "expo-router";
-import { Appearance } from "react-native";
+import { Appearance, Platform } from "react-native";
 import { useEffect } from "react";
 
 export default function PublicLayout() {
@@ -11,7 +11,9 @@ export default function PublicLayout() {
   const currentScreen = segments.at(-1);
 
   useEffect(() => {
-    Appearance.setColorScheme("dark");
+    if (Platform.OS !== "web") {
+      Appearance.setColorScheme("dark");
+    }
   }, []);
 
   if (loading && currentScreen !== "splash") {
